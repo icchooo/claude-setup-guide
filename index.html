@@ -151,15 +151,15 @@ function tabVis(hl){
 
 /* Screenshot image helper */
 const imgMap = {
-  'signup': 'images/1.jpg',
-  'billing': 'images/2.jpg',
-  'install': 'images/3.jpg',
-  'login': 'images/6.jpg',
-  'tabs': 'images/7.jpg',
-  'git-mac-check': 'images/10.jpg',
-  'code-local': 'images/11.jpg',
-  'cowork-tab': 'images/8.jpg',
-  'cowork-proceed': 'images/9.jpg'
+  'signup': '1.jpg',
+  'billing': '2.jpg',
+  'install': '3.jpg',
+  'login': '6.jpg',
+  'tabs': '7.jpg',
+  'git-mac-check': '10.jpg',
+  'code-local': '11.jpg',
+  'cowork-tab': '8.jpg',
+  'cowork-proceed': '9.jpg'
 };
 function imgSlot(id, label){
   if(imgMap[id]){
@@ -214,7 +214,7 @@ function buildSteps(){
 
   /* 4: ログイン */
   steps.push({badge:`STEP ${n++}`,title:'アプリを起動してログイン',desc:'インストールしたアプリを開いて、Claudeアカウントでログインします。',content:`
-    <div class="instruction"><div class="instruction-num">1</div><h3>アプリを起動する</h3>${W?'<p>Windowsキー（左下のロゴマーク）を押して「<strong>Claude</strong>」と検索 → 表示された「Claude」アプリをクリックします。</p>':'<p>Launchpad（ロケットのアイコン）を開くか、Finderの「アプリケーション」フォルダから「Claude」をダブルクリックします。</p>'}${W?'':imgDirect('images/4.jpg','LaunchpadからClaudeを探す')+imgDirect('images/5.jpg','検索窓で「Claude」と入力')}</div>
+    <div class="instruction"><div class="instruction-num">1</div><h3>アプリを起動する</h3>${W?'<p>Windowsキー（左下のロゴマーク）を押して「<strong>Claude</strong>」と検索 → 表示された「Claude」アプリをクリックします。</p>':'<p>Launchpad（ロケットのアイコン）を開くか、Finderの「アプリケーション」フォルダから「Claude」をダブルクリックします。</p>'}${W?'':imgDirect('4.jpg','LaunchpadからClaudeを探す')+imgDirect('5.jpg','検索窓で「Claude」と入力')}</div>
     <div class="instruction"><div class="instruction-num">2</div><h3>ログインする</h3><p>「Get Started」ボタンをクリックし、先ほど作成したClaudeアカウントでサインインします。</p><ul><li>Googleアカウントで登録した方 →「Continue with Google」をクリック</li><li>メールで登録した方 → メールアドレスとパスワードを入力</li></ul></div>
     ${imgSlot('login','ログイン後のチャット画面')}
     <div class="instruction"><div class="instruction-num">3</div><h3>アプリの構造を確認</h3><p>アプリの上部に<strong>3つのタブ</strong>があります：</p>
