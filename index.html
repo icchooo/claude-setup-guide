@@ -275,6 +275,46 @@ function buildSteps(){
       <div class="callout tip"><span class="callout-icon">🎉</span><div><strong>Coworkが使えるようになりました！</strong><br>作業中はアプリを開いたままにしてください。閉じると作業が中断されます。</div></div>`});
   }
 
+  /* セットアップ完了 → 初期設定への分岐 */
+  steps.push({badge:'完了',title:null,isMidCompletion:true,content:''});
+
+  /* 初期設定ステップ */
+  steps.push({badge:'初期設定',title:'最低限やっておきたい5つの設定',desc:'5分で終わります。安全に使うために確認しましょう。',content:`
+    <div class="instruction"><div class="instruction-num">1</div><h3>言語設定</h3><p>画面左下のアカウントメニュー → 言語 →「<strong>日本語（日本）</strong>」に変更します。</p></div>
+    ${imgDirect('setting-lang.jpg','言語設定画面')}
+
+    <div class="instruction"><div class="instruction-num">2</div><h3>プライバシー設定</h3><p>設定 > プライバシー を開いてください。</p>
+      <div class="check-item" onclick="toggleCheck(this)"><span class="check-box"></span><span>ロケーションメタデータ → <strong>オフ</strong></span></div>
+      <div class="check-item" onclick="toggleCheck(this)"><span class="check-box"></span><span>Claudeの改善にご協力ください → <strong>オフ</strong></span></div>
+      <p style="font-size:13px;color:var(--text-dim);">※ オンのままだと会話が学習に使われる可能性があります。</p>
+    </div>
+    ${imgDirect('setting-privacy.jpg','プライバシー設定画面')}
+
+    <div class="instruction"><div class="instruction-num">3</div><h3>コード実行とファイル作成</h3><p>設定 > 機能 を開いてください。</p>
+      <div class="check-item" onclick="toggleCheck(this)"><span class="check-box"></span><span>コード実行 → <strong>オン</strong>（オフだとClaude Codeが機能しません）</span></div>
+      <div class="check-item" onclick="toggleCheck(this)"><span class="check-box"></span><span>ネットワーク外部通信 → <strong>オフ</strong>（データ漏洩リスク防止）</span></div>
+    </div>
+    ${imgDirect('setting-code.jpg','コード実行とファイル作成の設定画面')}
+
+    <div class="instruction"><div class="instruction-num">4</div><h3>コネクタ</h3><p>設定 > コネクタ を開いてください。</p>
+      <div class="check-item" onclick="toggleCheck(this)"><span class="check-box"></span><span>Claude in Chrome → <strong>オン推奨</strong></span></div>
+      <p style="font-size:13px;color:var(--text-dim);">ブラウザ操作の自動化が可能に。アクセスは都度許可制なので安全です。</p>
+    </div>
+    ${imgDirect('setting-connector.jpg','コネクタ設定画面')}
+
+    <div class="instruction"><div class="instruction-num">5</div><h3>Claude Code Desktop</h3><p>設定 > Claude Code を開いてください。</p>
+      <div class="callout warn"><span class="callout-icon">🚨</span><div><strong>絶対オフにすべき設定</strong></div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><span class="check-box"></span><span>「バイパス権限モード」→ <strong>絶対オフ</strong>（確認なしで危険なコマンドが実行されてしまう）</span></div>
+      <div class="check-item" onclick="toggleCheck(this)"><span class="check-box"></span><span>「すべてのブラウザアクションを許可」→ <strong>絶対オフ</strong></span></div>
+      <div class="check-item" onclick="toggleCheck(this)"><span class="check-box"></span><span>「コンピュータ操作の許可」→ <strong>現状オフ推奨</strong>（速度が遅くトークン消費も多い割に効果が薄い）</span></div>
+    </div>
+    ${imgDirect('setting-claude-code.jpg','Claude Code Desktop設定画面')}
+    ${imgDirect('setting-browser.jpg','すべてのブラウザアクションを許可 → オフ')}
+
+    <div class="callout info"><span class="callout-icon">💡</span><div><strong>その他（使いながら調整でOK）</strong><br>外観テーマ、メモリ生成、Cowork/Dispatch設定、Chromeのサイトアクセス管理、スタートアップ起動、スリープ防止設定など。</div></div>
+  `});
+
+  /* 最終完了 */
   steps.push({badge:'完了',title:null,isCompletion:true,content:''});
 }
 
@@ -284,9 +324,13 @@ function renderStep(){
   const c=document.getElementById('stepContainer'),s=steps[currentStep],t=steps.length-1;
   document.getElementById('progressFill').style.width=Math.round((currentStep/t)*100)+'%';
   document.getElementById('progressPill').textContent=currentStep>=t?'完了！':`${currentStep+1} / ${t}`;
-  if(s.isCompletion){
+  if(s.isMidCompletion){
     const l=selectedTool==='both'?'Code & Cowork':selectedTool==='code'?'Code':'Cowork';
-    c.innerHTML=`<div class="step-screen active"><div class="completion"><div class="completion-icon">🎉</div><h2>セットアップ完了！</h2><p>Claude ${l}が使えるようになりました。お疲れさまでした！</p><button class="restart-btn" onclick="resetGuide()">最初に戻る</button></div></div>`;
+    c.innerHTML=`<div class="step-screen active"><div class="completion"><div class="completion-icon">🎉</div><h2>セットアップ完了！</h2><p>Claude ${l}が使えるようになりました。<br>続けて初期設定も済ませておくと安心です。</p><div style="display:flex;flex-direction:column;gap:10px;margin-top:16px;"><button class="nav-btn next" onclick="nextStep()">このまま初期設定へ →</button><button class="restart-btn" onclick="resetGuide()">最初に戻る</button></div></div></div>`;
+    document.getElementById('nextBtn').classList.add('hidden');document.getElementById('prevBtn').textContent='← 戻る';return;
+  }
+  if(s.isCompletion){
+    c.innerHTML=`<div class="step-screen active"><div class="completion"><div class="completion-icon">✅</div><h2>すべての設定が完了！</h2><p>セットアップも初期設定も完了です。<br>Claudeを存分に活用してください！</p><button class="restart-btn" onclick="resetGuide()">最初に戻る</button></div></div>`;
     document.getElementById('nextBtn').classList.add('hidden');document.getElementById('prevBtn').textContent='← 戻る';return;
   }
   document.getElementById('nextBtn').classList.remove('hidden');
