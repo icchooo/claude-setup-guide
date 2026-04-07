@@ -159,7 +159,8 @@ const imgMap = {
   'git-mac-check': '10.jpg',
   'code-local': '11.jpg',
   'cowork-tab': '8.jpg',
-  'cowork-proceed': '9.jpg'
+  'cowork-proceed': '9.jpg',
+  'install-win': 'install-win.jpg'
 };
 function imgSlot(id, label){
   if(imgMap[id]){
@@ -209,7 +210,7 @@ function buildSteps(){
     <div class="instruction"><div class="instruction-num">1</div><h3>ダウンロードページを開く</h3><p>以下のリンクからダウンロードページに移動してください：</p><p><a href="https://claude.ai/download" target="_blank" rel="noopener">Claudeアプリのダウンロードページ ↗</a></p></div>
     <div class="instruction"><div class="instruction-num">2</div><h3>${W?'Windows版':'Mac版'}をダウンロード</h3><p>「${W?'Download for Windows':'Download for macOS'}」をクリックします。数MBなのですぐ完了します。</p></div>
     <div class="instruction"><div class="instruction-num">3</div><h3>インストール</h3>${W?'<p>ダウンロードしたファイルをダブルクリックして実行します。画面の指示に従って進めてください。設定の変更は不要です。</p>':'<p>ダウンロードした .dmg ファイルを開き、Claudeのアイコンを「Applications」フォルダにドラッグ＆ドロップします。</p>'}</div>
-    ${imgSlot('install', W ? 'Windowsインストール画面' : 'MacのApplicationsへドラッグ')}
+    ${W ? imgSlot('install-win', 'Windowsインストール画面') : imgSlot('install', 'MacのApplicationsへドラッグ')}
     <div class="callout tip"><span class="callout-icon">✅</span><div>これ1つでチャット・Code・Coworkすべて使えます。別々にインストールする必要はありません。</div></div>`});
 
   /* 4: ログイン */
